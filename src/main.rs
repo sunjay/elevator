@@ -1,5 +1,14 @@
 #[macro_use]
+extern crate lazy_static;
+
+#[macro_use]
 extern crate kiss_ui;
+
+mod floor;
+mod direction;
+mod elevator;
+mod floor_controls;
+mod elevator_controller;
 
 use kiss_ui::prelude::*;
 

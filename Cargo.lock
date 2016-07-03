@@ -3,6 +3,7 @@ name = "elevator"
 version = "0.1.0"
 dependencies = [
  "kiss-ui 0.1.0 (git+https://github.com/cybergeek94/kiss-ui)",
+ "lazy_static 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -21,6 +22,11 @@ dependencies = [
  "iup-sys 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.13 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
+
+[[package]]
+name = "lazy_static"
+version = "0.1.16"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "libc"

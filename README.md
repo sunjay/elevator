@@ -47,11 +47,13 @@ struct Elevator {
     target_floor: Option<Floor>,
     direction: Option<Direction>,
     // value between 1 and 100 where 100 = 1.0 floors/tick
-    velocity: u32,
+    velocity: Floor,
 }
 ```
 
 When `direction` is `None` and `target_floor` is `None`, the elevator is considered idle.
+
+`velocity` is `Floor` because it is measured in `floors/tick`.
 
 ### FloorControls struct
 
@@ -62,11 +64,14 @@ struct FloorControls {
 }
 ```
 
-### Floor type
+### Floor newtype
 
 ```rust
-type Floor = u32;
+struct Floor(u32);
 ```
+
+Floors are in denominations of 100. This newtype enforces that and provides
+methods to increase or decrease floors.
 
 ### Direction enum
 
