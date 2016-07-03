@@ -10,7 +10,8 @@
 //! skipped.
 //! This is supported with the `unchecked_add()` method
 
-use std::ops::Add;
+use std::cmp::{max, min};
+use std::ops::{Add, Sub};
 
 // The power of 10 to use for representing whole floors
 const PRECISION: u32 = 2;
@@ -19,21 +20,37 @@ lazy_static! {
     static ref BASE_FLOOR: u32 = 10u32.pow(PRECISION);
 }
 
-#[derive(Eq, PartialEq)]
+#[derive(Eq, PartialEq, Clone, Copy, PartialOrd, Ord)]
 pub struct Floor(u32);
 
 impl Floor {
     pub fn new(floor: u32) -> Floor {
-        assert!(floor >= *BASE_FLOOR);
         Floor(floor)
     }
 
     pub fn from_floor_number(number: usize) -> Floor {
-        Floor::new(number as u32 * *BASE_FLOOR)
+        let floor = number as u32 * *BASE_FLOOR;
+        assert!(floor >= *BASE_FLOOR);
+        Floor::new(floor)
     }
 
-    pub fn last_floor(&self) -> Floor {
+    pub fn to_floor_number(&self) -> usize {
+        (self.0 / *BASE_FLOOR) as usize
+    }
+
+    /// Round up to the nearest floor number
+    pub fn round_up(&self) -> Floor {
+        Floor::new((self.0 + *BASE_FLOOR) / *BASE_FLOOR * *BASE_FLOOR)
+    }
+
+    /// Round down to the nearest floor number
+    pub fn round_down(&self) -> Floor {
         Floor::new(self.0 / *BASE_FLOOR * *BASE_FLOOR)
+    }
+
+    /// Gets the distance from one floor to another
+    pub fn distance_to(&self, other: &Floor) -> Floor {
+        Floor::new(max(self.0, other.0) - min(self.0, other.0))
     }
 }
 
@@ -41,6 +58,14 @@ impl Add for Floor {
     type Output = Floor;
 
     fn add(self, rhs: Floor) -> Floor {
+        unimplemented!();
+    }
+}
+
+impl Sub for Floor {
+    type Output = Floor;
+
+    fn sub(self, rhs: Floor) -> Floor {
         unimplemented!();
     }
 }
