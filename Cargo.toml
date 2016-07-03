@@ -1,0 +1,10 @@
+[package]
+name = "elevator"
+version = "0.1.0"
+authors = ["Sunjay Varma <varma.sunjay@gmail.com>"]
+
+[dependencies]
+
+[dependencies.kiss-ui]
+git = "https://github.com/cybergeek94/kiss-ui"
+
