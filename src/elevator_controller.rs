@@ -2,6 +2,7 @@ use floor::Floor;
 use elevator::Elevator;
 use floor_controls::FloorControls;
 
+#[derive(Debug, Clone)]
 pub struct ElevatorController {
     elevators: Vec<Elevator>,
     floors: Vec<FloorControls>,
@@ -10,7 +11,7 @@ pub struct ElevatorController {
 }
 
 impl ElevatorController {
-    fn new(velocity: Floor) -> ElevatorController {
+    pub fn new(velocity: Floor) -> ElevatorController {
         ElevatorController {
             elevators: Vec::new(),
             floors: Vec::new(),
@@ -20,7 +21,7 @@ impl ElevatorController {
 
     /// Update should be called once per tick
     /// It is up to you to define what and how long a tick is
-    fn update(&mut self) {
+    pub fn update(&mut self) {
         // It is important that this function bare no dependence
         // on the number of elevators staying the same between calls
         // or on the number of floors remaining the same either
@@ -29,19 +30,19 @@ impl ElevatorController {
         // each time
     }
 
-    fn all(&self) -> &Vec<Elevator> {
+    pub fn all(&self) -> &Vec<Elevator> {
         &self.elevators
     }
 
-    fn all_floors(&self) -> &Vec<FloorControls> {
+    pub fn all_floors(&self) -> &Vec<FloorControls> {
         &self.floors
     }
 
-    fn vel(&self) -> Floor {
+    pub fn vel(&self) -> Floor {
         self.velocity
     }
 
-    fn set_velocity(&mut self, velocity: Floor) {
+    pub fn set_velocity(&mut self, velocity: Floor) {
         self.velocity = velocity;
     }
 }

@@ -1,6 +1,7 @@
 use floor::Floor;
 use direction::Direction;
 
+#[derive(Debug, Clone)]
 pub struct Elevator {
     position: Floor,
     direction: Option<Direction>,
