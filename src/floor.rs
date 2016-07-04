@@ -14,13 +14,15 @@ use std::cmp::{max, min};
 use std::ops::{Add, Sub};
 
 // The power of 10 to use for representing whole floors
+// Note: Modifying this value has serious effects on how raw u32 values
+// are interpreted in the rest of the code. Do so with caution.
 const PRECISION: u32 = 2;
 
 lazy_static! {
     static ref BASE_FLOOR: u32 = 10u32.pow(PRECISION);
 }
 
-#[derive(Eq, PartialEq, Clone, Copy, PartialOrd, Ord)]
+#[derive(Debug, Eq, PartialEq, Clone, Copy, PartialOrd, Ord)]
 pub struct Floor(u32);
 
 impl Floor {
@@ -28,12 +30,23 @@ impl Floor {
         Floor(floor)
     }
 
+    /// Returns a fraction of a floor
+    /// A more dependable way to get a fraction of a floor, independent
+    /// of the implementation and of what PRECISION is defined to be
+    pub fn fraction(numerator: u32, denominator: u32) -> Floor {
+        Floor::new(numerator * *BASE_FLOOR / denominator)
+    }
+
     pub fn from_floor_number(number: usize) -> Floor {
         let floor = number as u32 * *BASE_FLOOR;
-        assert!(floor >= *BASE_FLOOR);
+        assert!(floor >= *BASE_FLOOR,
+            "Cannot create a floor under the bottom floor");
         Floor::new(floor)
     }
 
+    /// Returns the floor number this floor represent
+    /// Should only be called on a whole (rounded) floor
+    /// Round the floor based on the direction of the elevator
     pub fn to_floor_number(&self) -> usize {
         (self.0 / *BASE_FLOOR) as usize
     }
@@ -58,7 +71,10 @@ impl Add for Floor {
     type Output = Floor;
 
     fn add(self, rhs: Floor) -> Floor {
-        unimplemented!();
+        let Floor(rhs_value) = rhs;
+        let Floor(value) = self;
+
+        Floor::new(value + rhs_value)
     }
 }
 
@@ -66,7 +82,19 @@ impl Sub for Floor {
     type Output = Floor;
 
     fn sub(self, rhs: Floor) -> Floor {
-        unimplemented!();
+        // since floors cannot be negative, it is an error if this
+        // subtraction would cause wrap around
+        // note that we can't just test the difference because
+        // these are unsigned numbers
+        if rhs > self {
+            panic!("Cannot have a Floor less than zero");
+        }
+        else {
+            let Floor(rhs_value) = rhs;
+            let Floor(value) = self;
+
+            Floor::new(value - rhs_value)
+        }
     }
 }
 

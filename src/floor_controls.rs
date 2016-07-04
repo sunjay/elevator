@@ -1,5 +1,6 @@
 use direction::Direction;
 
+#[derive(Debug, Eq, PartialEq, Clone)]
 pub struct FloorControls {
     up: bool,
     down: bool,
