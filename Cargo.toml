@@ -5,7 +5,7 @@ authors = ["Sunjay Varma <varma.sunjay@gmail.com>"]
 
 [dependencies]
 lazy_static = "0.1.*"
-
-[dependencies.kiss-ui]
-git = "https://github.com/cybergeek94/kiss-ui"
+conrod = "0.36.4"
+find_folder = "0.3.0"
+piston_window = "0.45.0"
 
