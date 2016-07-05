@@ -8,6 +8,13 @@ pub struct Elevator {
 }
 
 impl Elevator {
+    pub fn new() -> Elevator {
+        Elevator {
+            position: Floor::ground(),
+            direction: None,
+        }
+    }
+
     pub fn is_at_floor_number(&self, floor_number: usize) -> bool {
         self.is_at_floor(Floor::from_floor_number(floor_number))
     }

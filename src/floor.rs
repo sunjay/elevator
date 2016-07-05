@@ -30,6 +30,11 @@ impl Floor {
         Floor(floor)
     }
 
+    /// Returns the ground floor (bottom floor)
+    pub fn ground() -> Floor {
+        Floor::new(*BASE_FLOOR)
+    }
+
     /// Returns a fraction of a floor
     /// A more dependable way to get a fraction of a floor, independent
     /// of the implementation and of what PRECISION is defined to be

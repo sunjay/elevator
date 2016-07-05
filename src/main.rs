@@ -13,12 +13,17 @@ mod app;
 
 use floor::Floor;
 use elevator_controller::ElevatorController;
+use app::ElevatorInterface;
 
 fn main() {
     let fps = 60;
     let velocity = Floor::fraction(1, fps);
-    let controller = ElevatorController::new(velocity);
+    let mut controller = ElevatorController::new(velocity);
+    for _ in 0..4 {
+        controller.add_floor();
+    }
+    controller.add_elevator();
 
-    let interface = app::ElevatorInterface::new(controller);
+    let interface = ElevatorInterface::new(controller);
     interface.start(fps);
 }

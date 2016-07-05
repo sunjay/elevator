@@ -12,11 +12,16 @@ pub struct ElevatorController {
 
 impl ElevatorController {
     pub fn new(velocity: Floor) -> ElevatorController {
-        ElevatorController {
+        let mut ctrl = ElevatorController {
             elevators: Vec::new(),
             floors: Vec::new(),
             velocity: velocity,
-        }
+        };
+        // need at least one floor and one elevator
+        ctrl.add_floor();
+        ctrl.add_elevator();
+
+        ctrl
     }
 
     /// Update should be called once per tick
@@ -44,6 +49,14 @@ impl ElevatorController {
 
     pub fn set_velocity(&mut self, velocity: Floor) {
         self.velocity = velocity;
+    }
+
+    pub fn add_elevator(&mut self) {
+        self.elevators.push(Elevator::new());
+    }
+
+    pub fn add_floor(&mut self) {
+        self.floors.push(FloorControls::new());
     }
 }
 
